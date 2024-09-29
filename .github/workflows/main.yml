@@ -11,15 +11,15 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v1
+        uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.1.7
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_RDS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_RDS_SECRET_ACCESS_KEY }}
@@ -33,12 +33,12 @@ jobs:
         run: terraform validate
         working-directory: .
 
-    #   - name: Plan Terraform
-    #     run: terraform plan
-    #     working-directory: .
-    #     env:
-    #       TF_VAR_db_password: ${{ secrets.DB_PASSWORD }}
-    #       TF_VAR_aws_region: ${{ secrets.AWS_RDS_REGION }}
+      - name: Plan Terraform
+        run: terraform plan
+        working-directory: .
+        env:
+          TF_VAR_db_password: ${{ secrets.DB_PASSWORD }}
+          TF_VAR_aws_region: ${{ secrets.AWS_RDS_REGION }}
 
     #   - name: Apply Terraform
     #     run: terraform apply -auto-approve
