@@ -27,11 +27,11 @@ jobs:
 
       - name: Initialize Terraform
         run: terraform init
-        working-directory: infrastructure
+        working-directory: .
 
       - name: Validate Terraform
         run: terraform validate
-        working-directory: infrastructure
+        working-directory: .
 
     #   - name: Plan Terraform
     #     run: terraform plan
