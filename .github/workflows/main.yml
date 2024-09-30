@@ -34,9 +34,6 @@ jobs:
       - name: Plan Terraform
         run: terraform plan -var-file="values.tfvars"
 
-    #   - name: Apply Terraform
-    #     run: terraform apply -auto-approve
-    #     working-directory: .
-    #     env:
-    #       TF_VAR_db_password: ${{ secrets.DB_PASSWORD }}
-    #       TF_VAR_aws_region: ${{ secrets.AWS_RDS_REGION }}
+      - name: Apply Terraform
+        run: terraform apply -var-file="values.tfvars" -auto-approve
+        working-directory: .
