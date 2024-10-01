@@ -34,19 +34,14 @@ jobs:
       - name: Plan Terraform
         run: terraform plan -var-file="values.tfvars"
 
-      - name: Production approval
-        uses: trstringer/manual-approval@v1
+      - name: Request approval to Apply Terraform
+        if: ${{ github.event_name == 'push' }}
+        uses: peter-evans/approve-pull-request-action@v3
         with:
-          secret: ${{ github.TOKEN }}
-          approvers:  thiagothalison1,rafaelsmonte,vitors95
-          minimum-approvals: 1
-          issue-title: "Deploying DB to prod"
-          issue-body: "Please approve or deny the deployment of DB to prod"
-          exclude-workflow-initiator-as-approver: false
-          additional-approved-words: ''
-          additional-denied-words: ''
-        
-
+          approvers: 'thiagothalison1 ,vitors95 , rafaelsmonte' 
+          message: 'Please approve to apply Terraform changes.'
+          
       - name: Apply Terraform
+        if: ${{ github.event_name == 'push' && steps.request-approval.outcome == 'success' }}
         run: terraform apply -var-file="values.tfvars" -auto-approve
         working-directory: .
