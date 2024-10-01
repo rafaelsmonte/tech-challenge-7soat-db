@@ -8,8 +8,7 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
-    environment: production
-
+    #environment: production
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -34,6 +33,19 @@ jobs:
 
       - name: Plan Terraform
         run: terraform plan -var-file="values.tfvars"
+
+      - name: Production approval
+        uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ github.TOKEN }}
+          approvers:  thiagothalison1,rafaelsmonte,vitors95
+          minimum-approvals: 1
+          issue-title: "Deploying DB to prod"
+          issue-body: "Please approve or deny the deployment of DB to prod"
+          exclude-workflow-initiator-as-approver: false
+          additional-approved-words: ''
+          additional-denied-words: ''
+        
 
       - name: Apply Terraform
         run: terraform apply -var-file="values.tfvars" -auto-approve
