@@ -33,7 +33,7 @@ jobs:
       - name: Plan Terraform
         run: terraform plan -var-file="values.tfvars"
 
-  terraform-deploy-teste:
+  terraform-deploy:
     runs-on: ubuntu-latest
     environment: production
     needs: terraform-check
