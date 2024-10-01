@@ -33,7 +33,7 @@ jobs:
       - name: Plan Terraform
         run: terraform plan -var-file="values.tfvars"
 
-  terraform-deploy:
+  terraform-deploy-teste:
     runs-on: ubuntu-latest
     environment: production
     needs: terraform-check
@@ -56,4 +56,4 @@ jobs:
       - name: Initialize Terraform
         run: terraform init
       - name: Apply Terraform
-        run: terraform apply -var-file="values.tfvars" -auto-approve
+        run: terraform apply -var-file="values.tfvars" -auto-approve 
