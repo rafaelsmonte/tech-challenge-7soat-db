@@ -14,13 +14,6 @@ resource "aws_security_group" "rds_database_security_group" {
     security_groups = var.rds_database_security_group_ingress_eks_sgids
   }
 
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
   egress {
     from_port   = 0
     to_port     = 0
