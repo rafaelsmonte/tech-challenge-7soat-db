@@ -3,9 +3,9 @@
 This repository contains the IAC to create 7soat project databases using terraform.
 
 3 databases are created:
-    - 1 postgresql database for payments service (modules/payments-db)
-    - 1 postgresql database for products catalog service (modules/products-catalog-db)
-    - 1 nosql database table for orders service (modules/orders-db)
+    - 1 postgresql database for payments service (modules/payments-db). See [payments schema](./docs/payments-schema.png) 
+    - 1 postgresql database for products catalog service (modules/products-catalog-db) See [products catalog schema](./docs/products-catalog-schema.png)
+    - 1 nosql database table for orders service (modules/orders-db). See [orders schema](./docs/orders-schema.md)
 
 ## Database Creation
 
