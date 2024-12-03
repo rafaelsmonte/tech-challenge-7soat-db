@@ -1,27 +1,31 @@
-## Tech Challenge 7Soat - Database
+# 7 Soat Infrastructure Databases
 
-### Postgres + RDS
+This repository contains the IAC to create 7soat project databases using terraform.
 
-As a well-established and highly robust relational database, PostgreSQL fits perfectly in a scenario involving multiple interrelated entities, such as the CRUD APIs in our application.
+3 databases are created:
+    - 1 postgresql database for payments service (modules/payments-db). See [payments schema](./docs/payments-schema.png) 
+    - 1 postgresql database for products catalog service (modules/products-catalog-db) See [products catalog schema](./docs/products-catalog-schema.png)
+    - 1 nosql database table for orders service (modules/orders-db). See [orders schema](./docs/orders-schema.md)
 
-The relational structure facilitates maintaining integrity between tables, which is crucial when dealing with operations involving products, orders, and customers. The support for ACID transactions ensures that the system's critical operations are carried out reliably, even in cases of concurrency or occasional failures.
+## Database Creation
 
-Moreover, using Amazon RDS to manage PostgreSQL in the cloud removes the complexity of handling backups, updates, and scalability. This allows us to focus on application development without worrying about infrastructure. With the high availability and automated replicas that RDS offers, the system gains an extra layer of resilience, which is essential in production.
+```
+Requirements:
+  - Terraform CLI configured in your operating system and propper AWS credencials for terraform from cloud infrastructure
+  - Make sure the VPC and public and private subnets are created and their ID's on AWS properly set on terraform env vars (values.tfvars)
+```
 
-When compared to the other technologies studied:
+1. Create payments database
+```
+terraform apply -var-file values.tfvars -target module.payments-db
+```
 
-- **MongoDB** and **Cassandra** are great for handling large volumes of unstructured data or for scenarios involving massive reads and writes without dependencies between entities. However, our application is relational and would not benefit from these features.
-- **Redis** is excellent as an in-memory database, but its strength lies in caching and fast key-value operations. This type of optimization is not necessary for our case.
-- **Neo4J**, being a graph-oriented database, would be overkill for what we need. We do not have a scenario with complex data relationships, as is typical in social networks or recommendation systems.
+2. Create products-catalog database
+```
+terraform apply -var-file values.tfvars -target module.products-catalog-db
+```
 
-In summary, PostgreSQL with RDS offers the perfect balance between performance, ease of management, and suitability for our system’s relational model, without adding unnecessary complexity to the infrastructure.
-
-### Data Modeling
-
-![er_diagram.png](er_diagram.png)
-
-### Authors
-
-- _Rafael Santos Monte (RM355045)_
-- _Thiago Thalison Firmino de Lima (RM354998)_
-- _Vitor Manoel da Silveira (RM355029)_
+3. Create orders database
+```
+terraform apply -var-file values.tfvars -target module.orders-db
+```
